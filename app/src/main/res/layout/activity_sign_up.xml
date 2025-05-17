@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color1"
+    tools:context=".activity.SignUpActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frmSignUp"
+        android:src="@drawable/form"
+        android:layout_margin="30dp"
+        tools:ignore="ContentDescription"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSignUp"
+        android:text="SIGN UP"
+        app:layout_constraintEnd_toEndOf="@id/frmSignUp"
+        app:layout_constraintStart_toStartOf="@id/frmSignUp"
+        app:layout_constraintTop_toTopOf="@id/frmSignUp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textSize="36dp"
+        tools:ignore="HardcodedText,SpUsage" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imgAvatar"
+        android:src="@drawable/avatar_person"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/tvSignUp"
+        app:layout_constraintStart_toStartOf="@id/tvSignUp"
+        app:layout_constraintTop_toBottomOf="@id/tvSignUp"
+        tools:ignore="ContentDescription" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutInputEmail"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/frmSignUp"
+        app:layout_constraintStart_toStartOf="@id/frmSignUp"
+        app:layout_constraintTop_toBottomOf="@id/imgAvatar">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtEmail"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutInputUsername"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/frmSignUp"
+        app:layout_constraintStart_toStartOf="@id/frmSignUp"
+        app:layout_constraintTop_toBottomOf="@id/layoutInputEmail">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtUsername"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:hint="Username"
+            android:inputType="text"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutInputPassword"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/frmSignUp"
+        app:layout_constraintStart_toStartOf="@id/frmSignUp"
+        app:layout_constraintTop_toBottomOf="@id/layoutInputUsername">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtPassword"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutInputConfirmPassword"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/frmSignUp"
+        app:layout_constraintStart_toStartOf="@id/frmSignUp"
+        app:layout_constraintTop_toBottomOf="@id/layoutInputPassword">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtConfirmPassword"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSignUp"
+        app:layout_constraintEnd_toEndOf="@id/frmSignUp"
+        app:layout_constraintStart_toStartOf="@id/frmSignUp"
+        app:layout_constraintTop_toBottomOf="@id/layoutInputConfirmPassword"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="Sign Up"
+        android:textSize="28sp"
+        tools:ignore="HardcodedText" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="Log In Account"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:id="@+id/tvLogInAccount"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/btnSignUp"
+        app:layout_constraintEnd_toEndOf="@id/frmSignUp"
+        app:layout_constraintStart_toStartOf="@id/frmSignUp"
+        android:layout_marginTop="20dp"
+        tools:ignore="HardcodedText,KeyboardInaccessibleWidget" />
+</androidx.constraintlayout.widget.ConstraintLayout>

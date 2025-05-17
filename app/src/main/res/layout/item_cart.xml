@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/imgCartItem"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:contentDescription="Cart Item Image"
+        android:src="@drawable/img_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tvCartItemName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@id/decrease"
+        app:layout_constraintStart_toEndOf="@id/imgCartItem"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tvCartItemCost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Cost"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@id/decrease"
+        app:layout_constraintStart_toEndOf="@id/imgCartItem"
+        app:layout_constraintTop_toBottomOf="@id/tvCartItemName"
+        tools:ignore="HardcodedText" />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/delete"
+        android:src="@drawable/ic_delete"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,KeyboardInaccessibleWidget" />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/increase"
+        android:src="@drawable/ic_plus"
+        android:clickable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/delete"
+        tools:ignore="ContentDescription,KeyboardInaccessibleWidget" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvQuantity"
+        android:text="1"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/increase"
+        tools:ignore="HardcodedText" />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/decrease"
+        android:src="@drawable/ic_minus"
+        android:clickable="true"
+        app:layout_constraintEnd_toStartOf="@id/tvQuantity"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,KeyboardInaccessibleWidget" />
+</androidx.constraintlayout.widget.ConstraintLayout>

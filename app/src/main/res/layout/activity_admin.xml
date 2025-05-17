@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AdminActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/color1"
+        android:id="@+id/admin">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/logo"
+            android:src="@drawable/img_logo_app"
+            android:layout_marginLeft="10dp"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/logo"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/exit"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:src="@drawable/ic_exit"
+            tools:ignore="ContentDescription,KeyboardInaccessibleWidget,RtlHardcoded" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/delete"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/exit"
+            android:clickable="true"
+            android:src="@drawable/ic_delete"
+            tools:ignore="ContentDescription,KeyboardInaccessibleWidget,RtlHardcoded" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/insert"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/delete"
+            android:clickable="true"
+            android:src="@drawable/ic_insert"
+            tools:ignore="ContentDescription,KeyboardInaccessibleWidget,RtlHardcoded" />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/imgProduct"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:contentDescription="Product Image"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/img_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/admin"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/edtProductName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Product Name"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgProduct"
+        app:layout_constraintTop_toBottomOf="@id/admin"
+        tools:ignore="Autofill,HardcodedText" />
+
+    <EditText
+        android:id="@+id/edtCost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Cost"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgProduct"
+        app:layout_constraintTop_toBottomOf="@id/edtProductName"
+        tools:ignore="Autofill,HardcodedText" />
+
+    <EditText
+        android:id="@+id/edtDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgProduct"
+        app:layout_constraintTop_toBottomOf="@id/edtCost"
+        tools:ignore="Autofill,HardcodedText" />
+
+    <Button
+        android:id="@+id/btnAddImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtDescription"
+        tools:ignore="HardcodedText" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewProducts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAddImage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

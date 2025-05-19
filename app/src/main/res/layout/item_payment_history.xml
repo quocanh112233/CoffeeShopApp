@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/tvInvoiceId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order ID: "
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date: "
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvInvoiceId"
+        android:layout_marginTop="4dp"
+        tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/tvProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product: "
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDate"
+        android:layout_marginTop="4dp"
+        tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/tvQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity: "
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductName"
+        android:layout_marginTop="4dp"
+        tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/tvTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total: "
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvQuantity"
+        android:layout_marginTop="4dp"
+        tools:ignore="HardcodedText" />
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalPrice"
+        android:layout_marginTop="8dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

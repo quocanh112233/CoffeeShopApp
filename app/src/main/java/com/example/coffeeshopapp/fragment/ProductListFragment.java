@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffeeshopapp.R;
 import com.example.coffeeshopapp.activity.ProductDetailActivity;
+import com.example.coffeeshopapp.activity.SearchActivity;
 import com.example.coffeeshopapp.adapter.ProductAdapter;
 import com.example.coffeeshopapp.model.DatabaseHelper;
 
@@ -22,12 +25,16 @@ public class ProductListFragment extends Fragment {
     RecyclerView recyclerViewProduct;
     ProductAdapter productAdapter;
     DatabaseHelper databaseHelper;
+    ImageView search;
+    SearchView searchView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = inflater.inflate(R.layout.fragment_product_list, container, false);
 
+        searchView = view.findViewById(R.id.searchView);
+        search = view.findViewById(R.id.search);
         recyclerViewProduct = view.findViewById(R.id.recyclerViewProducts);
         databaseHelper = new DatabaseHelper(requireContext());
 
@@ -42,6 +49,15 @@ public class ProductListFragment extends Fragment {
             startActivity(intent);
         });
         recyclerViewProduct.setAdapter(productAdapter);
+
+        search.setOnClickListener(v -> {
+            String query = searchView.getQuery().toString().trim();
+            if (!query.isEmpty()) {
+                Intent intent = new Intent(requireContext(), SearchActivity.class);
+                intent.putExtra("SEARCH_QUERY", query);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

@@ -15,7 +15,7 @@ import com.example.coffeeshopapp.controller.LogInController;
 public class LogInActivity extends AppCompatActivity {
     EditText edtEmail, edtPassword;
     Button btnLogIn;
-    TextView tvCreateAccount;
+    TextView tvCreateAccount, tvForgotPassword;
     LogInController logInController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class LogInActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.edtPassword);
         btnLogIn = findViewById(R.id.btnLogIn);
         tvCreateAccount = findViewById(R.id.tvCreateAccount);
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
 
         logInController = new LogInController(this);
 
@@ -45,6 +46,13 @@ public class LogInActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+            }
+        });
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LogInActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
             }
         });
         tvCreateAccount.setOnClickListener(new View.OnClickListener() {

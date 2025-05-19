@@ -25,6 +25,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_COST = "cost";
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_IMAGE_PATH = "image_path";
+    // ORDER
+    private static final String TABLE_ORDERS = "orders";
+    private static final String COLUMN_ORDER_ID = "order_id";
+    private static final String COLUMN_PAYMENT_DATE = "payment_date";
+    private static final String COLUMN_QUANTITY = "quantity";
+    private static final String COLUMN_TOTAL_PRICE = "total_price";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,6 +53,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_DESCRIPTION + " TEXT, " +
                 COLUMN_IMAGE_PATH + " TEXT)";
         db.execSQL(createProductsTable);
+        //create orders table
+        String createOrdersTable = "CREATE TABLE " + TABLE_ORDERS + " (" +
+                COLUMN_ORDER_ID + " TEXT PRIMARY KEY, " +
+                COLUMN_PRODUCT_ID + " INTEGER, " +
+                COLUMN_NAME + " TEXT, " +
+                COLUMN_QUANTITY + " INTEGER, " +
+                COLUMN_TOTAL_PRICE + " REAL, " +
+                COLUMN_PAYMENT_DATE + " TEXT)";
+        db.execSQL(createOrdersTable);
         //admin
         ContentValues adminValues = new ContentValues();
         adminValues.put(COLUMN_USERNAME, "admin");
@@ -101,6 +116,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return rowsAffected > 0;
     }
+    public String getUsernameByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_USERS + " WHERE " + COLUMN_EMAIL + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+        String username = "";
+        if (cursor.moveToFirst()) {
+            username = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME));
+        }
+        cursor.close();
+        db.close();
+        return username;
+    }
     public boolean addProduct(String name, double cost, String description, String imagePath) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -148,5 +175,59 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return exists;
+    }
+
+    public boolean addOrder(String orderId, int productId, String productName, int quantity, double totalPrice, String paymentDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ORDER_ID, orderId);
+        values.put(COLUMN_PRODUCT_ID, productId);
+        values.put(COLUMN_NAME, productName);
+        values.put(COLUMN_QUANTITY, quantity);
+        values.put(COLUMN_TOTAL_PRICE, totalPrice);
+        values.put(COLUMN_PAYMENT_DATE, paymentDate);
+        long result = db.insert(TABLE_ORDERS, null, values);
+        db.close();
+        return result != -1;
+    }
+
+    public List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_ORDERS;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String orderId = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ORDER_ID));
+                int productId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PRODUCT_ID));
+                String productName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
+                int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_QUANTITY));
+                double totalPrice = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_TOTAL_PRICE));
+                String paymentDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PAYMENT_DATE));
+                orders.add(new Order(orderId, productId, productName, quantity, totalPrice, paymentDate));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return orders;
+    }
+    public List<Product> searchProducts(String keyword) {
+        List<Product> products = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_NAME + " LIKE ?";
+        Cursor cursor = db.rawQuery(query, new String[]{"%" + keyword + "%"});
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PRODUCT_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
+                double cost = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_COST));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGE_PATH));
+                products.add(new Product(id, name, cost, description, imagePath));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return products;
     }
 }

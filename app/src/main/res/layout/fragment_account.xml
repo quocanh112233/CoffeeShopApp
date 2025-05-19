@@ -44,9 +44,29 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
+            android:id="@+id/imgAvatar"
             android:src="@drawable/avatar_person"
             android:layout_centerInParent="true"
             tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvUsername"
+            android:text="Username: "
+            android:textSize="22sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:layout_below="@id/imgAvatar"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvEmail"
+            android:text="Email: "
+            android:textSize="22sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tvUsername"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -61,6 +81,22 @@
             android:layout_centerInParent="true"
             android:id="@+id/btnChangePass"
             android:text="Change Password"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessLeaf"
+        android:id="@+id/paymentHistory"
+        android:layout_below="@id/changePass">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/btnPaymentHistory"
+            android:text="Payment History"
             android:textStyle="bold"
             android:textSize="22sp"
             tools:ignore="HardcodedText" />

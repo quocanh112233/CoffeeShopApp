@@ -21,20 +21,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setOnItemSelectedListener(navListener);
 
         String email = getIntent().getStringExtra("USER_EMAIL");
         Fragment selectFragment = new HomeFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("USER_EMAIL", email);
+        bundle.putString("USER_EMAIL", email != null ? email : "");
         selectFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectFragment).commit();
     }
+
     private final NavigationBarView.OnItemSelectedListener navListener = item -> {
         int itemId = item.getItemId();
         Fragment selectedFragment = null;
+        Bundle bundle = new Bundle();
+        String email = getIntent().getStringExtra("USER_EMAIL");
+        bundle.putString("USER_EMAIL", email != null ? email : "");
 
         if (itemId == R.id.nav_home) {
             selectedFragment = new HomeFragment();
@@ -42,10 +45,16 @@ public class MainActivity extends AppCompatActivity {
             selectedFragment = new ProductListFragment();
         } else if (itemId == R.id.nav_cart) {
             selectedFragment = new CartFragment();
-        }else if (itemId == R.id.nav_account){
+        } else if (itemId == R.id.nav_account) {
             selectedFragment = new AccountFragment();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+
+        if (selectedFragment != null) {
+            selectedFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, selectedFragment)
+                    .commit();
+        }
         return true;
     };
 }

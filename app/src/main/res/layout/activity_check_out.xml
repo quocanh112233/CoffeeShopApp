@@ -71,13 +71,23 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/tvInvoiceId"
-        android:text="InvoiceId: "
+        android:id="@+id/tvDate"
+        android:text="Date: "
         android:textSize="22sp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgProduct"
+        tools:ignore="HardcodedText" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvInvoiceId"
+        android:text="InvoiceId: "
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDate"
         tools:ignore="HardcodedText" />
     <TextView
         android:layout_width="0dp"

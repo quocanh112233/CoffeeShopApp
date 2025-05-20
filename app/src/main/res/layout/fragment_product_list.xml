@@ -44,7 +44,7 @@
             android:src="@drawable/ic_search"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
-            tools:ignore="ContentDescription,RtlHardcoded" />
+            tools:ignore="ContentDescription,KeyboardInaccessibleWidget,RtlHardcoded" />
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewProducts"

@@ -1,6 +1,7 @@
 package com.example.coffeeshopapp.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bumptech.glide.Glide;
 import com.example.coffeeshopapp.R;
@@ -71,6 +73,14 @@ public class CheckOutActivity extends AppCompatActivity {
             boolean success = databaseHelper.addOrder(orderId, productId, productName, quantity, totalPrice, currentDate);
             if (success) {
                 Toast.makeText(this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+                // Xóa sản phẩm khỏi giỏ hàng
+                boolean removed = cartController.removeFromCart(productId);
+                if (removed) {
+                    // Gửi broadcast để cập nhật giao diện giỏ hàng
+                    Intent intent = new Intent("CART_UPDATED");
+                    intent.putExtra("PRODUCT_ID", productId);
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                }
                 finish();
             } else {
                 Toast.makeText(this, "Lưu giao dịch thất bại", Toast.LENGTH_SHORT).show();

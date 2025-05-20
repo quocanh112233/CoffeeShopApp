@@ -20,7 +20,7 @@
             android:id="@+id/back"
             android:src="@drawable/ic_back"
             android:layout_marginLeft="10dp"
-            tools:ignore="ContentDescription,RtlHardcoded" />
+            tools:ignore="ContentDescription,KeyboardInaccessibleWidget,RtlHardcoded" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -47,7 +47,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 .placeholder(R.drawable.img_placeholder)
                 .into(holder.imgProduct);
 
-        // Highlight sản phẩm được chọn
         holder.itemView.setBackgroundColor(selectedPosition == position ? 0xFFE0E0E0 : 0xFFFFFFFF);
 
         holder.itemView.setOnClickListener(v -> {
@@ -67,7 +66,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void updateProducts(List<Product> newProducts) {
         productList.clear();
         productList.addAll(newProducts);
-        selectedPosition = -1; // Reset lựa chọn
+        selectedPosition = -1;
         notifyDataSetChanged();
     }
 

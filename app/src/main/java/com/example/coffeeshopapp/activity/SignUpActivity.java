@@ -26,6 +26,8 @@ public class SignUpActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
+        btnSignUp = findViewById(R.id.btnSignUp);
+        tvLogInAccount = findViewById(R.id.tvLogInAccount);
 
         signUpController = new SignUpController(this);
 

@@ -11,14 +11,14 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "UserDatabase.db";
-    private static final int DATABASE_VERSION = 1;
-    //USER
+    private static final int DATABASE_VERSION = 2;
+    // USER
     private static final String TABLE_USERS = "users";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_EMAIL = "email";
     private static final String COLUMN_PASSWORD = "password";
-    //PRODUCT
+    // PRODUCT
     private static final String TABLE_PRODUCTS = "products";
     private static final String COLUMN_PRODUCT_ID = "product_id";
     private static final String COLUMN_NAME = "name";
@@ -38,14 +38,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //create user table
+        // Tạo bảng users
         String createUserTable = "CREATE TABLE " + TABLE_USERS + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_USERNAME + " TEXT, " +
                 COLUMN_EMAIL + " TEXT UNIQUE, " +
                 COLUMN_PASSWORD + " TEXT)";
         db.execSQL(createUserTable);
-        //create product table
+
+        // Tạo bảng products
         String createProductsTable = "CREATE TABLE " + TABLE_PRODUCTS + " (" +
                 COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
@@ -53,7 +54,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_DESCRIPTION + " TEXT, " +
                 COLUMN_IMAGE_PATH + " TEXT)";
         db.execSQL(createProductsTable);
-        //create orders table
+
+        // Tạo bảng orders
         String createOrdersTable = "CREATE TABLE " + TABLE_ORDERS + " (" +
                 COLUMN_ORDER_ID + " TEXT PRIMARY KEY, " +
                 COLUMN_PRODUCT_ID + " INTEGER, " +
@@ -62,7 +64,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TOTAL_PRICE + " REAL, " +
                 COLUMN_PAYMENT_DATE + " TEXT)";
         db.execSQL(createOrdersTable);
-        //admin
+
+        // Thêm tài khoản admin
         ContentValues adminValues = new ContentValues();
         adminValues.put(COLUMN_USERNAME, "admin");
         adminValues.put(COLUMN_EMAIL, "admin123@admin.com");
@@ -72,9 +75,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS);
-        onCreate(db);
+        if (oldVersion < 2) {
+            String createOrdersTable = "CREATE TABLE " + TABLE_ORDERS + " (" +
+                    COLUMN_ORDER_ID + " TEXT PRIMARY KEY, " +
+                    COLUMN_PRODUCT_ID + " INTEGER, " +
+                    COLUMN_NAME + " TEXT, " +
+                    COLUMN_QUANTITY + " INTEGER, " +
+                    COLUMN_TOTAL_PRICE + " REAL, " +
+                    COLUMN_PAYMENT_DATE + " TEXT)";
+            db.execSQL(createOrdersTable);
+        }
     }
 
     public boolean addUser(String username, String email, String password) {
@@ -108,6 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return exists;
     }
+
     public boolean updatePassword(String email, String newPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -116,6 +127,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return rowsAffected > 0;
     }
+
     public String getUsernameByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_USERS + " WHERE " + COLUMN_EMAIL + " = ?";
@@ -128,6 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return username;
     }
+
     public boolean addProduct(String name, double cost, String description, String imagePath) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -211,6 +224,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return orders;
     }
+
     public List<Product> searchProducts(String keyword) {
         List<Product> products = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();

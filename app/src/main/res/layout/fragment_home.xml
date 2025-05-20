@@ -6,10 +6,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.HomeFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/home"
+        android:background="@color/color1"
+        tools:ignore="UselessLeaf" >
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/logo"
+            android:src="@drawable/img_logo_app"
+            android:layout_marginLeft="10dp"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvHome"
+            android:text="@string/app_name"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+    <ViewFlipper
+        android:id="@+id/bannerFlipper"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="8dp"
+        android:inAnimation="@anim/slide_in_right"
+        android:outAnimation="@anim/slide_out_left"
+        android:layout_below="@id/home"
+        android:autoStart="true"
+        android:flipInterval="3000"
+        tools:ignore="UselessParent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Banner 1"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:background="@color/color1"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Banner 2"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:background="@color/color2"
+            tools:ignore="HardcodedText" />
+    </ViewFlipper>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="HomeFragment"
+        android:id="@+id/tvSomeProducts"
+        android:text="Some Products"
+        android:textSize="22sp"
+        android:layout_margin="10dp"
+        android:layout_below="@id/bannerFlipper"
         tools:ignore="HardcodedText" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewProducts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/tvSomeProducts"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        tools:ignore="RtlHardcoded" />
 </RelativeLayout>

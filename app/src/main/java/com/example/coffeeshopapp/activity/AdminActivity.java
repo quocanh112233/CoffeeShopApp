@@ -1,5 +1,6 @@
 package com.example.coffeeshopapp.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.os.Environment;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast; // Import Toast for error messages if needed
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -25,8 +27,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale; // For String.format if needed for cost
 
-public class AdminActivity extends AppCompatActivity {
+// Implement the click listener interface
+public class AdminActivity extends AppCompatActivity implements ProductAdapter.OnProductClickListener {
     ImageView imgProduct,imgInsert, imgDelete, imgExit;
     EditText edtProductName, edtCost, edtDescription;
     Button btnAddImage;
@@ -35,8 +39,9 @@ public class AdminActivity extends AppCompatActivity {
     ProductAdapter productAdapter;
     String selectedImagePath;
     ActivityResultLauncher<Intent> imagePickerLauncher;
-    Product selectedProduct;
+    Product selectedProduct; // This will store the currently clicked product
     AdminController adminController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +61,8 @@ public class AdminActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
 
         recyclerViewProducts.setLayoutManager(new LinearLayoutManager(this));
-        productAdapter = new ProductAdapter(this, databaseHelper.getAllProducts(), product -> {
-            selectedProduct = product;
-        });
+        // Correctly instantiate ProductAdapter, passing 'this' as the listener
+        productAdapter = new ProductAdapter(this, databaseHelper.getAllProducts(), this);
         recyclerViewProducts.setAdapter(productAdapter);
 
         imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -66,9 +70,10 @@ public class AdminActivity extends AppCompatActivity {
                 Uri imageUri = result.getData().getData();
                 try {
                     selectedImagePath = saveImageToInternalStorage(imageUri);
-                    Glide.with(this).load(selectedImagePath).into(imgProduct);
+                    Glide.with(this).load(selectedImagePath).placeholder(R.drawable.img_placeholder).into(imgProduct);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -93,10 +98,10 @@ public class AdminActivity extends AppCompatActivity {
             if (selectedProduct != null) {
                 if (adminController.deleteProduct(selectedProduct.getId())) {
                     productAdapter.updateProducts(databaseHelper.getAllProducts());
-                    selectedProduct = null;
+                    clearInputs();
                 }
             } else {
-                adminController.deleteProduct(-1);
+                Toast.makeText(this, "Please select a product to delete", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -107,11 +112,36 @@ public class AdminActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("DefaultLocale")
+    @Override
+    public void onProductClick(Product product) {
+        selectedProduct = product;
+
+        edtProductName.setText(product.getName());
+        edtCost.setText(String.format(Locale.US, "%.2f", product.getCost()));
+        edtDescription.setText(product.getDescription());
+
+        selectedImagePath = product.getImagePath();
+        if (selectedImagePath != null && !selectedImagePath.isEmpty()) {
+            Glide.with(this)
+                    .load(selectedImagePath)
+                    .placeholder(R.drawable.img_placeholder)
+                    .into(imgProduct);
+        } else {
+            imgProduct.setImageResource(R.drawable.img_placeholder);
+        }
+    }
+
     private String saveImageToInternalStorage(Uri imageUri) throws IOException {
         InputStream inputStream = getContentResolver().openInputStream(imageUri);
+        if (inputStream == null) {
+            throw new IOException("Unable to open input stream for URI: " + imageUri);
+        }
         File directory = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CoffeeShopApp");
         if (!directory.exists()) {
-            directory.mkdirs();
+            if (!directory.mkdirs()) {
+                throw new IOException("Failed to create directory: " + directory.getAbsolutePath());
+            }
         }
         File file = new File(directory, "product_" + System.currentTimeMillis() + ".jpg");
         FileOutputStream outputStream = new FileOutputStream(file);
@@ -131,5 +161,13 @@ public class AdminActivity extends AppCompatActivity {
         edtDescription.setText("");
         imgProduct.setImageResource(R.drawable.img_placeholder);
         selectedImagePath = null;
+        selectedProduct = null;
+        if (productAdapter != null) {
+            int previouslySelected = productAdapter.getSelectedPosition();
+            productAdapter.updateProducts(databaseHelper.getAllProducts());
+            if (previouslySelected != -1) {
+                productAdapter.notifyItemChanged(previouslySelected);
+            }
+        }
     }
 }

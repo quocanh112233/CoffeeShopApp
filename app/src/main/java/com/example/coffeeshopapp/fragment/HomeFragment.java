@@ -1,5 +1,6 @@
 package com.example.coffeeshopapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffeeshopapp.R;
+import com.example.coffeeshopapp.activity.ProductDetailActivity;
 import com.example.coffeeshopapp.adapter.ProductAdapter;
 import com.example.coffeeshopapp.model.DatabaseHelper;
 import com.example.coffeeshopapp.model.Product;
@@ -19,7 +21,7 @@ import com.example.coffeeshopapp.model.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener {
     private RecyclerView recyclerViewProducts;
     private ProductAdapter productAdapter;
     private DatabaseHelper databaseHelper;
@@ -33,7 +35,7 @@ public class HomeFragment extends Fragment {
         databaseHelper = new DatabaseHelper(requireContext());
 
         List<Product> productList = getLimitedProducts(3);
-        productAdapter = new ProductAdapter(requireContext(), productList);
+        productAdapter = new ProductAdapter(requireContext(), productList, this);
         recyclerViewProducts.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerViewProducts.setAdapter(productAdapter);
 
@@ -47,5 +49,15 @@ public class HomeFragment extends Fragment {
             limitedProducts.add(allProducts.get(i));
         }
         return limitedProducts;
+    }
+
+    @Override
+    public void onProductClick(Product product) {
+        Intent intent = new Intent(requireContext(), ProductDetailActivity.class);
+        intent.putExtra("PRODUCT_ID", product.getId());
+        intent.putExtra("PRODUCT_NAME", product.getName());
+        intent.putExtra("PRODUCT_COST", product.getCost());
+        intent.putExtra("PRODUCT_IMAGE_PATH", product.getImagePath());
+        startActivity(intent);
     }
 }

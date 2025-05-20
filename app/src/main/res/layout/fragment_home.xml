@@ -30,7 +30,7 @@
     </RelativeLayout>
     <ViewFlipper
         android:id="@+id/bannerFlipper"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginBottom="8dp"
         android:inAnimation="@anim/slide_in_right"
@@ -39,22 +39,18 @@
         android:autoStart="true"
         android:flipInterval="3000"
         tools:ignore="UselessParent">
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Banner 1"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:background="@color/color1"
-            tools:ignore="HardcodedText" />
-        <TextView
+            android:layout_height="200dp"
+            android:id="@+id/banner1"
+            android:src="@drawable/first_banner"
+            tools:ignore="ContentDescription" />
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Banner 2"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:background="@color/color2"
-            tools:ignore="HardcodedText" />
+            android:layout_height="200dp"
+            android:id="@+id/banner2"
+            android:src="@drawable/second_banner"
+            tools:ignore="ContentDescription" />
     </ViewFlipper>
     <TextView
         android:layout_width="wrap_content"
